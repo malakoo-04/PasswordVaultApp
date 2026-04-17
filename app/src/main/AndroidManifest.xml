@@ -1,0 +1,30 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.passwordvault">
+
+ <application
+     android:theme="@style/AppTheme"
+     android:label="Password Vault"
+     android:allowBackup="true"
+     android:usesCleartextTraffic="true">
+
+  <activity android:name="com.example.passwordvault.activities.SettingsActivity" />
+  <activity android:name="com.example.passwordvault.activities.GeneratorActivity" />
+  <activity android:name="com.example.passwordvault.activities.DetailActivity" />
+  <activity android:name="com.example.passwordvault.activities.AddEditActivity" />
+  <activity android:name="com.example.passwordvault.activities.MainActivity" />
+  <activity android:name="com.example.passwordvault.activities.LoginActivity" />
+
+  <activity
+      android:name="com.example.passwordvault.activities.SplashActivity"
+      android:exported="true">
+
+   <intent-filter>
+    <action android:name="android.intent.action.MAIN" />
+    <category android:name="android.intent.category.LAUNCHER" />
+   </intent-filter>
+
+  </activity>
+
+ </application>
+
+</manifest>
