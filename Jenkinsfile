@@ -27,21 +27,16 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo 'Building Docker image...'
+                sh 'echo Docker image built successfully'
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                echo 'Running container...'
                 sh 'echo Container executed successfully'
             }
         }
 
-        stage('Docker Build') {
-            steps {
-                echo 'Building Docker image...'
-                sh 'echo Docker image built successfully'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
     }
 }
