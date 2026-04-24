@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Getting code from GitHub...'
-                git 'https://github.com/malakoo-04/PasswordVaultApp.git'
+                git branch: 'main', url: 'https://github.com/malakoo-04/PasswordVaultApp.git'
             }
         }
 
