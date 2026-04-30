@@ -23,19 +23,22 @@ pipeline {
                 echo 'Running unit tests...'
                 sh './gradlew test'
             }
+            post {
+                    always {
+                        junit '**/build/test-results/testDebugUnitTest/*.xml'
+                    }
+        }
         }
 
         stage('Docker Build') {
             steps {
-                echo 'Building Docker image...'
-                sh 'echo Docker image built successfully'
+                sh 'docker build -t passwordvault-artifact .'
             }
         }
 
         stage('Docker Run') {
             steps {
-                echo 'Running container...'
-                sh 'echo Container executed successfully'
+                sh 'docker run --rm passwordvault-artifact'
             }
         }
 
