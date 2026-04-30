@@ -12,15 +12,16 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Simulating build...'
-                sh 'echo Build successful'
+                echo 'Building Android project...'
+                sh 'chmod +x gradlew'
+                sh './gradlew assembleDebug'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Simulating tests...'
-                sh 'echo Tests passed'
+                echo 'Running unit tests...'
+                sh './gradlew test'
             }
         }
 
