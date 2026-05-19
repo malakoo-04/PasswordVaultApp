@@ -1,0 +1,20 @@
+---
+- hosts: local
+  become: false
+
+  tasks:
+
+    - name: Build Docker image
+      shell: docker build -t passwordvault-artifact .
+
+    - name: Load image into Minikube
+      shell: minikube image load passwordvault-artifact
+
+    - name: Deploy to Kubernetes
+      shell: kubectl apply -f k8s/
+
+    - name: Verify Pods
+      shell: kubectl get pods
+
+    - name: Verify Services
+      shell: kubectl get svc

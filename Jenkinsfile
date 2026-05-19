@@ -36,11 +36,20 @@ pipeline {
             }
         }
 
-        stage('Docker Run') {
+        stage('Kubernetes Deploy') {
             steps {
-                sh 'docker run --rm passwordvault-artifact'
+                sh 'minikube image load passwordvault-artifact'
+                sh 'kubectl apply -f k8s/'
             }
         }
+
+       stage('Verification') {
+           steps {
+               sh 'kubectl get pods'
+               sh 'kubectl get svc'
+               sh 'kubectl rollout status deployment/passwordvault-deployment'
+           }
+       }
 
     }
 }
