@@ -3,24 +3,24 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Checkout Source Code') {
             steps {
-                echo 'Getting code from GitHub...'
+                echo 'Cloning project from GitHub...'
                 git branch: 'main', url: 'https://github.com/malakoo-04/PasswordVaultApp.git'
             }
         }
 
-        stage('Build') {
+        stage('Build Android Application') {
             steps {
-                echo 'Building Android project...'
+                echo 'Building Android APK using Gradle...'
                 sh 'chmod +x gradlew'
                 sh './gradlew assembleDebug'
             }
         }
 
-        stage('Test') {
+        stage('Execute Unit Tests') {
             steps {
-                echo 'Running unit tests...'
+                echo 'Running automated unit tests...'
                 sh './gradlew test'
             }
             post {
@@ -30,25 +30,32 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('Build Docker Container') {
             steps {
-                echo 'Building Docker image...'
+                echo 'Creating Docker image...'
                 sh 'docker build -t passwordvault-artifact .'
             }
         }
 
-        stage('Ansible Deployment') {
+        stage('Deploy with Ansible') {
             steps {
-                echo 'Deploying with Ansible...'
+                echo 'Executing Ansible automation...'
                 sh 'ansible-playbook ansible/deploy.yml -i ansible/inventory.ini'
             }
         }
 
-        stage('Verification') {
+        stage('Kubernetes Verification') {
             steps {
-                echo 'Verifying deployment...'
-                sh 'kubectl get pods || true'
-                sh 'kubectl get svc || true'
+                echo 'Checking Kubernetes resources...'
+                sh 'kubectl get pods'
+                sh 'kubectl get svc'
+                sh 'kubectl rollout status deployment/passwordvault-deployment'
+            }
+        }
+
+        stage('Deployment Success') {
+            steps {
+                echo 'CI/CD Pipeline completed successfully!'
             }
         }
     }
