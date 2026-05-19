@@ -1,3 +1,3 @@
 FROM alpine:latest
 
-CMD sh -c "echo 'PasswordVault container executed successfully' && tail -f /dev/null"
+CMD ["sh", "-c", "while true; do echo PasswordVault running...; sleep 30; done"]
