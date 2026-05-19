@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: passwordvault-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: passwordvault
+
+  template:
+    metadata:
+      labels:
+        app: passwordvault
+
+    spec:
+      containers:
+        - name: passwordvault-container
+          image: passwordvault-artifact
+          imagePullPolicy: Never

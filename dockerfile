@@ -1,3 +1,3 @@
 FROM alpine:latest
 
-CMD ["echo", "PasswordVault container executed successfully"]
+CMD sh -c "echo 'PasswordVault container executed successfully' && tail -f /dev/null"
