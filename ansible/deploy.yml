@@ -5,7 +5,7 @@
   tasks:
 
     - name: Docker image build
-      shell: docker build -t passwordvault-artifact .
+      shell: docker build -t passwordvault-artifact ..
 
     - name: Kubernetes deployment
       shell: |
