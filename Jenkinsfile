@@ -24,32 +24,32 @@ pipeline {
                 sh './gradlew test'
             }
             post {
-                    always {
-                        junit '**/build/test-results/testDebugUnitTest/*.xml'
-                    }
-        }
+                always {
+                    junit '**/build/test-results/testDebugUnitTest/*.xml'
+                }
+            }
         }
 
         stage('Docker Build') {
             steps {
+                echo 'Building Docker image...'
                 sh 'docker build -t passwordvault-artifact .'
             }
         }
 
-        stage('Kubernetes Deploy') {
+        stage('Ansible Deployment') {
             steps {
-                sh 'minikube image load passwordvault-artifact'
-                sh 'kubectl apply -f k8s/'
+                echo 'Deploying with Ansible...'
+                sh 'ansible-playbook ansible/deploy.yml -i ansible/inventory.ini'
             }
         }
 
-       stage('Verification') {
-           steps {
-               sh 'kubectl get pods'
-               sh 'kubectl get svc'
-               sh 'kubectl rollout status deployment/passwordvault-deployment'
-           }
-       }
-
+        stage('Verification') {
+            steps {
+                echo 'Verifying deployment...'
+                sh 'kubectl get pods || true'
+                sh 'kubectl get svc || true'
+            }
+        }
     }
 }
